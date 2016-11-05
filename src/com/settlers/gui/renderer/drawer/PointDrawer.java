@@ -21,4 +21,9 @@ public class PointDrawer implements Drawer {
 			g.drawOval((int)pt.getX(), (int)pt.getY(), 10, 10);
 		}	
 	}
+	@Override
+	public void update(SettlersBoard board) {
+		// TODO Auto-generated method stub
+		
+	}
 }

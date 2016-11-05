@@ -6,38 +6,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.settlers.gamelogic.gamestate.board.Hexagon;
+import com.settlers.gamelogic.gamestate.board.SettlersBoard;
 import com.settlers.gui.Tile;
 import com.settlers.gui.renderer.drawer.HexagonTileDrawer;
+import com.settlers.gui.renderer.drawer.SettlementDrawer;
 
 public class BoardRenderer extends AbstractRenderer<Polygon> {
-	
-	private int tileHeight = 120;
-	private int tileWidth = 120;
-	private List<Hexagon> boardTiles;
-	private List<Tile> guiTiles;
+
+	private List<Tile> boardTiles;
 	private List<Point> nodes;
 	
-	public BoardRenderer(List<Hexagon> boardTiles) {
-		this.boardTiles = boardTiles;
-		this.guiTiles = new ArrayList<Tile>();
+	public BoardRenderer(SettlersBoard board) {
+		this.board = board;
+		this.boardTiles = board.getTiles();
 		this.init();
 	}
 	
 	private void init() {
-		generateNodePoints();
-		super.addDrawer(new HexagonTileDrawer(this.guiTiles));
+//		generateNodePoints();
+		super.addDrawer(new HexagonTileDrawer(this.boardTiles, this.origin));
+		super.addDrawer(new SettlementDrawer());
 	}
 	
 	private void generateNodePoints() {
 		nodes = new ArrayList<Point>();
-		for(Hexagon tile:boardTiles) {
+/*		for(Hexagon hex:boardTiles) {
 			tile.setTileHeight(tileHeight);
-			tile.setTileWidth(tileWidth);
+			tile.setTileWidth(tileWidth);*/
 			
-			Tile guiTile = new Tile(tile);
+/*			Tile guiTile = new Tile(tile);
 			this.guiTiles.add(guiTile);
+*/			
 			
-			
-		}
+//		}
 	}
 }

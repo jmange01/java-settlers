@@ -2,17 +2,22 @@ package com.settlers.gui.renderer.drawer;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Polygon;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.awt.Point;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.settlers.gamelogic.gamestate.board.Hexagon;
+import com.settlers.gamelogic.gamestate.board.Node;
 import com.settlers.gamelogic.gamestate.board.SettlersBoard;
 import com.settlers.gui.Tile;
 
 public class HexagonTileDrawer implements Drawer {
+	
+	private int tileHeight = 80;
+	private int tileWidth = 80;
+	
+	private Point origin;
 	
 	public enum ResourceColors {
 		OCEAN(Color.BLUE),
@@ -30,37 +35,46 @@ public class HexagonTileDrawer implements Drawer {
 		}
 	}
 	
-	private List<Tile> tiles;
+	private List<Hexagon> tiles;
 	
-	public HexagonTileDrawer(List<Tile> tiles) {
-		this.tiles = tiles;
+	public HexagonTileDrawer(List<Tile> tiles, Point origin) {
+		this.origin = origin;
+		this.tiles = new ArrayList<Hexagon>();
+		for(Tile t:tiles) {
+			this.tiles.add(new Hexagon(t, this.tileWidth, this.tileHeight, this.origin));
+		}
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		try(PrintWriter pw = new PrintWriter(new File("tiles.csv"));) {
-			for(Tile t:tiles) {
-				logtiles(pw, t);
-				g.setColor(ResourceColors.valueOf(t.getHexagon().getTileType().toString()).c);
-				g.fillPolygon(t);
+//		try(PrintWriter pw = new PrintWriter(new File("tiles.csv"));) {
+			for(Hexagon h:tiles) {
+//				logtiles(pw, h);
+				g.setColor(ResourceColors.valueOf(h.getTileType().toString()).c);
+				g.fillPolygon(h);
 				g.setColor(Color.BLACK);
-				g.drawPolygon(t);
+				g.drawPolygon(h);
 			}
-		} catch (FileNotFoundException e) {
+/*		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		//g.drawPolygon(board.getTiles().get(3));
+		}*/
 	}
 	
-	public void logtiles(PrintWriter pw, Tile t) {
+	public void logtiles(PrintWriter pw, Hexagon h) {
 
-		int[] xpts = t.xpoints;
-		int[] ypts = t.ypoints;
-		pw.append(t.getHexagon().toString() + ",");
-		for(int i=0;i<t.npoints;i++) {
+		int[] xpts = h.xpoints;
+		int[] ypts = h.ypoints;
+		pw.append(h.toString() + ",");
+		for(int i=0;i<h.npoints;i++) {
 			pw.append(xpts[i] + ":" + ypts[i] + ",");
 		}
 		pw.append("\n");
+	}
+
+	@Override
+	public void update(SettlersBoard board) {
+		// TODO Auto-generated method stub
+		
 	}
 }

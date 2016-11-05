@@ -12,12 +12,22 @@ import com.settlers.gamelogic.gamestate.deck.DevCardDeck;
 import com.settlers.gamelogic.vo.Player;
 
 public class SettlersGameState {
+	public enum GameStage {
+		SETUP,
+		IN_PROGRESS,
+		END
+		
+	}
 	private SettlersBoard board;
+	private GameStage stage;
+	private List<Player> players;
+	
 	public SettlersGameState(){
 		List<Player> players = new ArrayList<Player>();
 		BoardBuilder builder = new StandardBoardBuilder();
 		board = builder.buildBoard();
 		Deck deck = new DevCardDeck(new File("properties" + System.getProperty("file.separator") + "devDeck.csv"));
+		this.stage = GameStage.SETUP;
 		//deck.shuffle();
 	}
 	
