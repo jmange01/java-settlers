@@ -11,6 +11,7 @@ import com.settlers.gamelogic.gamestate.board.Hexagon;
 import com.settlers.gamelogic.gamestate.board.Node;
 import com.settlers.gamelogic.gamestate.board.SettlersBoard;
 import com.settlers.gui.Tile;
+import com.settlers.gui.Tile.TileType;
 
 public class HexagonTileDrawer implements Drawer {
 	
@@ -19,14 +20,17 @@ public class HexagonTileDrawer implements Drawer {
 	
 	private Point origin;
 	
+	private static final Color DESERT_COLOR = new Color(0.9f, 0.8f, 0.7f);
+	private static final Color BRICK_COLOR = new Color(0.9f, 0.5f, 0.5f);
+	
 	public enum ResourceColors {
 		OCEAN(Color.BLUE),
-		DESERT(Color.GRAY),
-		BRICK(Color.RED),
+		DESERT(DESERT_COLOR),
+		BRICK(BRICK_COLOR),
 		WHEAT(Color.YELLOW),
 		SHEEP(Color.GREEN),
 		LUMBER(Color.ORANGE),
-		ORE(Color.BLACK);
+		ORE(Color.GRAY);
 		
 		private final Color c;
 		
@@ -47,18 +51,15 @@ public class HexagonTileDrawer implements Drawer {
 
 	@Override
 	public void draw(Graphics g) {
-//		try(PrintWriter pw = new PrintWriter(new File("tiles.csv"));) {
-			for(Hexagon h:tiles) {
-//				logtiles(pw, h);
-				g.setColor(ResourceColors.valueOf(h.getTileType().toString()).c);
-				g.fillPolygon(h);
-				g.setColor(Color.BLACK);
-				g.drawPolygon(h);
+		for(Hexagon h:tiles) {
+			g.setColor(ResourceColors.valueOf(h.getTileType().toString()).c);
+			g.fillPolygon(h);
+			g.setColor(Color.BLACK);
+			g.drawPolygon(h);
+			if(!h.getTileType().equals(TileType.OCEAN) && !h.getTileType().equals(TileType.DESERT)) {
+				g.drawString(String.valueOf(h.getTileRollVal()), (int)h.getBounds().getCenterX(), (int)h.getBounds().getCenterY());				
 			}
-/*		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		}
 	}
 	
 	public void logtiles(PrintWriter pw, Hexagon h) {

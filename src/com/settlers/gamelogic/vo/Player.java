@@ -19,6 +19,7 @@ public class Player {
 	int freeRoads;
 	int points;
 	int knights;
+	private boolean isActive = false;
 	
 	List<Settlement> ownedSettlements;
 	List<Road> ownedRoads;
@@ -41,6 +42,18 @@ public class Player {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public String getPlayerName() {
+		return this.name;
+	}
+	
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+	
+	public boolean isActive() {
+		return this.isActive;
 	}
 	
 	public void playSettlement(Settlement s) {

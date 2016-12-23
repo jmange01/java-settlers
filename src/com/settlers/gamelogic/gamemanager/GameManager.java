@@ -18,17 +18,21 @@ public class GameManager {
 	public SettlersBoard getGameBoard() {
 		return this.state.getBoard();
 	}
+	
+	public void update(GameAction action) {
+		if(ActionType.BUILD_SETTLEMENT.equals(action.getType())) {
+			this.addSettlement(action);
+		}
+		
+		if(ActionType.END_TURN.equals(action.getType())) {
+			state.activateNextPlayer();
+		}
+	}
 
 	public synchronized void addSettlement(GameAction action) {
 		Node n = action.getLocation();
 		Settlement s = new Settlement((int)n.getLocation().getX(),(int)n.getLocation().getY(), action.getPlayer().getSettlementImage());
 		this.state.getBoard().addSettlement(s);
 		action.getPlayer().playSettlement(s);
-	}
-	
-	public void update(GameAction action) {
-		if(ActionType.BUILD_SETTLEMENT.equals(action.getType())) {
-			this.addSettlement(action);
-		}
 	}
 }

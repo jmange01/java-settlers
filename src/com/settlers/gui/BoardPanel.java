@@ -2,13 +2,14 @@ package com.settlers.gui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
-import com.settlers.gamelogic.gamemanager.GameManager;
+import com.settlers.gamelogic.gamestate.SettlersGameState;
 import com.settlers.gamelogic.gamestate.board.Node;
 import com.settlers.gamelogic.gamestate.board.SettlersBoard;
 import com.settlers.gui.listener.BoardPanelMouseListener;
@@ -16,27 +17,28 @@ import com.settlers.gui.listener.GameAction;
 import com.settlers.gui.renderer.AbstractRenderer;
 import com.settlers.util.Calculator2d;
 
-public class BoardPanel extends GameContainer {
+public class BoardPanel extends GamePanel {
 
 //	private static final int TILE_VIEW_WIDTH = 6;
 //	private static final int TILE_VIEW_HEIGHT = 8;
 	
 	private static final long serialVersionUID = 4568611896607665446L;
 	private AbstractRenderer<? extends Object> renderer;
-	private GameManager manager;
+	private SettlersGameState state;
 	private GameAction gameAction = null;
 	private Node activeNode = null;
 	
 	private Component lightBox = null;
 
-	public BoardPanel(AbstractRenderer<? extends Object> r, GameManager manager){
-		this.setSize(450,450);
+	public BoardPanel(AbstractRenderer<? extends Object> r, SettlersGameState state){
+		this.setPreferredSize(new Dimension(450,450));
 		this.setLocation(new Point(100,0));
 		this.setVisible(true);
 		this.setBackground(Color.CYAN);
+		this.setLayout(null);
+		this.state = state;
 		this.renderer = r;
 		this.renderer.setOrigin(this.getLocation());
-		this.manager = manager;
 //		board.setTiles(generateBaseTiles());
 		this.addListeners();
 		
@@ -77,7 +79,7 @@ public class BoardPanel extends GameContainer {
 	private Node getNearestNode(Point p) {
 		double bestDist = Double.MAX_VALUE;
 		Node nearest = null;
-		SettlersBoard board = this.manager.getGameBoard();
+		SettlersBoard board = this.state.getBoard();
 		for(Tile t:board.getTiles()) {
 			for(Node n:t.getNodes()) {
 				double dist = Calculator2d.getDistance(n.getLocation(), p);
@@ -94,7 +96,7 @@ public class BoardPanel extends GameContainer {
 		if(this.lightBox != null) {
 			this.remove(this.lightBox);
 		}
-		JPanel lightBox = new BoardActionDialogBox(n, this);
+		JPanel lightBox = new BoardActionDialogBox(n, state.getActivePlayer(), this);
 		this.add(lightBox);
 		this.lightBox = lightBox;
 		this.activeNode = n;

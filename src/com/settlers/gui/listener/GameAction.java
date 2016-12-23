@@ -5,18 +5,21 @@ import com.settlers.gamelogic.vo.Player;
 
 public class GameAction {
 	public enum ActionType {
+		END_STAGE,
 		BUILD_SETTLEMENT,
 		BUILD_ROAD,
 		BUILD_CITY,
-		ROLL_DICE;
+		ROLL_DICE,
+		END_TURN;
 	}
 	
 	private ActionType type;
-	private Player p;
+	private Player actor;
 	private Node location;
 	
-	public GameAction(ActionType type) {
+	public GameAction(ActionType type, Player actor) {
 		this.type = type;
+		this.actor = actor;
 	}
 	
 	public ActionType getType() {
@@ -32,10 +35,10 @@ public class GameAction {
 	}
 	
 	public void setPlayer(Player p) {
-		this.p = p;
+		this.actor = actor;
 	}
 	
 	public Player getPlayer() {
-		return this.p;
+		return this.actor;
 	}
 }

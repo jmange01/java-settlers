@@ -70,4 +70,8 @@ public class Hexagon extends Polygon{
 	public TileType getTileType() {
 		return this.tile.getTileType();
 	}
+	
+	public int getTileRollVal() {
+		return this.tile.getRollVal();
+	}
 }
