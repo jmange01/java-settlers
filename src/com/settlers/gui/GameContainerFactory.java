@@ -2,23 +2,21 @@ package com.settlers.gui;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.settlers.gamelogic.gamestate.SettlersGameState;
 import com.settlers.gui.renderer.BoardRenderer;
 
 public class GameContainerFactory {
+	//The current state of the Game window (e.g. Menu, game setup, gameplay)
 	public enum Stage {
 		SETUP,
 		PLAY,
 		END;
 	}
+	
 	protected static GameContainer getContainerInstance(Stage stage, SettlersGameState state, GameWindow window) {
-		
 		GameContainer container = null;
 		if(Stage.SETUP.equals(stage)) {
 			container = buildSetupContainer(state);
@@ -40,6 +38,10 @@ public class GameContainerFactory {
 		return container;
 	}
 	
+	/**
+	 * Builds a standard container for a Settlers game
+	 * @return a GameContainer component to be added to the GameWindow
+	 */
 	private static GameContainer buildGamePlayContainer(SettlersGameState state) {
 		GameContainer container = generateStandardContainer();
 		
@@ -47,6 +49,7 @@ public class GameContainerFactory {
 		container.addGamePanel(new ScorePanel(state));
 		container.addGamePanel(new DiceRollPanel(state));
 		container.addGamePanel(new EndTurnPanel());
+		container.addGamePanel(new ResourcePanel(state));
 		
 		return container;
 		

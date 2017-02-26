@@ -21,9 +21,10 @@ import com.settlers.gui.listener.GameAction;
 import com.settlers.gui.listener.GameAction.ActionType;
 
 public class SetupDialog extends GamePanel {
-	GameAction action = null;
-	SettlersGameState state;
-	List<JPanel> playerSetupFields = new ArrayList<JPanel>();
+	private static final long serialVersionUID = 1540038987593201469L;
+	private GameAction action = null;
+	private SettlersGameState state;
+	private List<JPanel> playerSetupFields = new ArrayList<JPanel>();
 
 	public SetupDialog(SettlersGameState state) {
 		this.setPreferredSize(new Dimension(800,600));

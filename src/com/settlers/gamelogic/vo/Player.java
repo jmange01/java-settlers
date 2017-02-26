@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import com.settlers.gamelogic.gamestate.board.Road;
 import com.settlers.gamelogic.gamestate.board.Settlement;
+import com.settlers.gui.Tile.TileType;
 
 public class Player {
 	
@@ -38,7 +39,7 @@ public class Player {
 		this.stockpile = new Stockpile();
 		
 		try {
-			this.settlementImage = ImageIO.read(new File("resources/settlement.png"));
+			this.settlementImage = ImageIO.read(new File("resources/settlement_red.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -61,8 +62,23 @@ public class Player {
 		this.ownedSettlements.add(s);
 	}
 	
+	public void updateStockpile(TileType resource) {
+		this.stockpile.addResource(resource);
+	}
+	
 	public BufferedImage getSettlementImage() {
 		return this.settlementImage;
+	}
+	
+	public String reportResources() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Brick: " + this.stockpile.brick + "\n");
+		sb.append("Ore: " + this.stockpile.ore + "\n");
+		sb.append("Sheep: " + this.stockpile.sheep + "\n");
+		sb.append("Wheat: " + this.stockpile.wheat + "\n");
+		sb.append("Wood: " + this.stockpile.wood);
+		
+		return sb.toString();
 	}
 	
 }

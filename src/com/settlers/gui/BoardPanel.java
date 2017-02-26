@@ -17,11 +17,7 @@ import com.settlers.gui.listener.GameAction;
 import com.settlers.gui.renderer.AbstractRenderer;
 import com.settlers.util.Calculator2d;
 
-public class BoardPanel extends GamePanel {
-
-//	private static final int TILE_VIEW_WIDTH = 6;
-//	private static final int TILE_VIEW_HEIGHT = 8;
-	
+public class BoardPanel extends GamePanel {	
 	private static final long serialVersionUID = 4568611896607665446L;
 	private AbstractRenderer<? extends Object> renderer;
 	private SettlersGameState state;

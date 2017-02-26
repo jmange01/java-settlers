@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import com.settlers.gamelogic.gamestate.SettlersGameState;
-import com.settlers.gamelogic.gamestate.SettlersGameState.TurnStep;
+import com.settlers.gamelogic.gamestate.SettlersGameState.PlayStep;
 import com.settlers.gui.listener.GameAction;
 import com.settlers.gui.listener.GameAction.ActionType;
 
@@ -39,23 +39,22 @@ public class DiceRollPanel extends GamePanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if(TurnStep.ROLL.equals(state.getCurrentTurnStep())) {
-			this.result.setVisible(false);
-			this.result.invalidate();
+//		if(TurnStep.ROLL.equals(state.getCurrentTurnStep())) {
+			//this.result.setVisible(false);
+			//this.result.invalidate();
+			this.result.setText(this.state.getLastRoll() != 0 ? String.valueOf(this.state.getLastRoll()) : "");
 			this.rollButton.validate();
 			this.rollButton.setVisible(true);
-		}
+//		}
 	}
 	
 	@Override
 	public void notifyGameAction(GameAction action) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public GameAction getAction() {
-		// TODO Auto-generated method stub
 		GameAction action = this.action;
 		this.action = null;
 		return action;

@@ -27,8 +27,6 @@ public class GameWindow extends JFrame {
 	}
 	
 	public void init(SettlersGameState state){		
-//TODO: this is a basic renderer to show a summary of the game state. remove the line below this one later
-//		panes.add(new BoardPanel(new SimpleRenderer<Object>(manager.getGameBoard()),this.manager));
 		this.container = GameContainerFactory.getContainerInstance(Stage.SETUP, state, this);
 		this.add(container.getPanel());
 	}

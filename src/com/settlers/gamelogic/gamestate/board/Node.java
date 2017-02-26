@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.settlers.gui.Tile;
@@ -14,7 +15,7 @@ public class Node {
 	private Point location;
 	private Settlement settlement = null;
 	private Set<Node> adjacent = new HashSet<Node>();
-	private HashMap<Integer,List<Tile>> resources;
+	private Map<Integer,List<Tile>> resources;
 	
 	public Node(int y, int x) {
 		setIndexedLocation(new Point(x,y));
@@ -65,5 +66,9 @@ public class Node {
 	
 	public void addAdjacent(Node n) {
 		this.adjacent.add(n);
+	}
+	
+	public Map<Integer, List<Tile>> getResourceMap() {
+		return this.resources;
 	}
 }

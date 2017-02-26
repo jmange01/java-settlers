@@ -38,6 +38,9 @@ public class StandardBoardBuilder implements BoardBuilder{
 			for(int j=i%2==1?1:2;j<nodes[i].length;j+=2) {
 				int value = template.nextTile();
 				Tile t  = new Tile();
+				if(value == 1) {
+					addCharacteristics(t);	
+				}
 				t.addNode(nodes[i][j-1]);
 				t.addNode(nodes[i-1][j-1]);
 				t.addNode(nodes[i-1][j]);
@@ -58,9 +61,6 @@ public class StandardBoardBuilder implements BoardBuilder{
 				nodes[i+1][j-1].addAdjacent(nodes[i+1][j]);
 				nodes[i+1][j-1].addAdjacent(nodes[i][j-1]);
 
-				if(value == 1) {
-					addCharacteristics(t);	
-				}
 				tiles.add(t);
 			}
 		}
