@@ -5,7 +5,6 @@ import java.awt.Polygon;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.settlers.gamelogic.gamestate.board.Hexagon;
 import com.settlers.gamelogic.gamestate.board.SettlersBoard;
 import com.settlers.gui.Tile;
 import com.settlers.gui.renderer.drawer.HexagonTileDrawer;

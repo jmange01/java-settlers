@@ -1,47 +1,40 @@
 package test;
 
-import static org.junit.Assert.*;
+import java.util.HashSet;
+import java.util.Set;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.settlers.util.Dice;
 
 public class DiceTest {
-
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	@Test
-	public void test() {
-		Dice d = new Dice(2,6);
-		try {
-
-			BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-			String s = bufferRead.readLine();
-			while(s!="stop"){
-				System.out.println(d.roll());
-				s = bufferRead.readLine();
-			}
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public void testSingle() {
+		simulateRolls(1,4,100);
+	}
+	
+	@Test
+	public void testTwoStandard() {
+		simulateRolls(2,6,1000);
+	}
+	
+	@Test
+	public void testManySmall() {
+		simulateRolls(8,3,1000);
+	}
+	
+	@Test
+	public void testManyLarge() {
+		simulateRolls(12,12,100000);
+	}
+	
+	private void simulateRolls(int diceCount, int sides, int reps) {
+		Dice d = new Dice(diceCount,sides);
+		Set<Integer> results = new HashSet<Integer>();
+		for(int i = 0; i < reps; i++) {
+			results.add(d.roll());			
 		}
-		d.roll();
+		assert(results.size() == diceCount * sides);
 	}
 
 }

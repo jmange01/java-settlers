@@ -70,6 +70,6 @@ public class StandardBoardBuilder implements BoardBuilder{
 	private void addCharacteristics(Tile t) {
 		Random r = new Random();
 		//TODO: There's a bug in the random tile selection here. Going to fix it later
-		t.setCharacteristics((int)(r.nextDouble() * 12) + 1, TileType.values()[(int)(r.nextDouble() * 6) + 1]);
+		t.setCharacteristics(((int)(r.nextDouble() * 11)) + 2, TileType.values()[(int)(r.nextDouble() * 6) + 1]);
 	}
 }

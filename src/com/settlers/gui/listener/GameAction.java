@@ -14,12 +14,12 @@ public class GameAction {
 	}
 	
 	private ActionType type;
-	private Player actor;
+	private Player player;
 	private Node location;
 	
-	public GameAction(ActionType type, Player actor) {
+	public GameAction(ActionType type, Player player) {
 		this.type = type;
-		this.actor = actor;
+		this.player = player;
 	}
 	
 	public ActionType getType() {
@@ -34,11 +34,7 @@ public class GameAction {
 		this.location = location;
 	}
 	
-	public void setPlayer(Player p) {
-		this.actor = actor;
-	}
-	
 	public Player getPlayer() {
-		return this.actor;
+		return this.player;
 	}
 }

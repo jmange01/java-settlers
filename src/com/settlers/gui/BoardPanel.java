@@ -35,7 +35,6 @@ public class BoardPanel extends GamePanel {
 		this.state = state;
 		this.renderer = r;
 		this.renderer.setOrigin(this.getLocation());
-//		board.setTiles(generateBaseTiles());
 		this.addListeners();
 		
 	}

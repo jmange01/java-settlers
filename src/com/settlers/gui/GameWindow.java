@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 
-import com.settlers.gamelogic.gamemanager.GameManager;
 import com.settlers.gamelogic.gamestate.SettlersGameState;
 import com.settlers.gui.GameContainerFactory.Stage;
 import com.settlers.gui.listener.GameAction;

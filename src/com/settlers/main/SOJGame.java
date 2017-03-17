@@ -22,7 +22,6 @@ public class SOJGame implements Runnable{
 	GameManager manager;
 	public SOJGame(){
 		SettlersGameState gameState = new SettlersGameState();
-//		manager = new GameManager(gameState);
 		gui = new GameWindow(gameState);
 		manager = new GameManager(gameState);
 	}

@@ -1,6 +1,5 @@
 package com.settlers.gamelogic.gamestate;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,8 +7,6 @@ import java.util.List;
 import com.settlers.gamelogic.gamestate.board.BoardBuilder;
 import com.settlers.gamelogic.gamestate.board.SettlersBoard;
 import com.settlers.gamelogic.gamestate.board.StandardBoardBuilder;
-import com.settlers.gamelogic.gamestate.deck.Deck;
-import com.settlers.gamelogic.gamestate.deck.DevCardDeck;
 import com.settlers.gamelogic.vo.Player;
 import com.settlers.util.Dice;
 
@@ -53,15 +50,19 @@ public class SettlersGameState {
 	
 	public SettlersGameState(){
 		this.players = new ArrayList<Player>();
-		BoardBuilder builder = new StandardBoardBuilder();
-		board = builder.buildBoard();
-		Deck deck = new DevCardDeck(new File("properties" + System.getProperty("file.separator") + "devDeck.csv"));
-		//deck.shuffle();
 	}
 	
 	public void finalizeInitialState() {
 		Collections.shuffle(players);
+		for(int i = 0; i < players.size(); i++) {
+			players.get(i).setPlayerIndex(i);
+			players.get(i).giveFreeSettlement();
+		}
 		players.get(activePlayer).setActive(true);
+		BoardBuilder builder = new StandardBoardBuilder();
+		board = builder.buildBoard();
+//		Deck deck = new DevCardDeck(new File("properties" + System.getProperty("file.separator") + "devDeck.csv"));
+		//deck.shuffle();
 	}
 	
 	public SettlersBoard getBoard() {

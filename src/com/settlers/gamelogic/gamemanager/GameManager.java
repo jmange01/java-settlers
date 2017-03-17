@@ -1,11 +1,13 @@
 package com.settlers.gamelogic.gamemanager;
 
+import com.settlers.gamelogic.gamemanager.SettlersGameProperties.GamePiece;
 import com.settlers.gamelogic.gamestate.SettlersGameState;
 import com.settlers.gamelogic.gamestate.SettlersGameState.GameStage;
 import com.settlers.gamelogic.gamestate.SettlersGameState.PlayStep;
 import com.settlers.gamelogic.gamestate.board.Node;
 import com.settlers.gamelogic.gamestate.board.Settlement;
 import com.settlers.gamelogic.gamestate.board.SettlersBoard;
+import com.settlers.gamelogic.vo.Player;
 import com.settlers.gui.Tile;
 import com.settlers.gui.listener.GameAction;
 import com.settlers.gui.listener.GameAction.ActionType;
@@ -40,16 +42,20 @@ public class GameManager {
 			this.state.nextStep();
 		} else if(ActionType.END_TURN.equals(action.getType())) {
 			if(GameStage.SETUP.equals(state.getCurrentStage())) {
-				if(state.getActivePlayer() == state.getPlayers().get(state.getPlayers().size() - 1)) {
+				if(!state.playOrderReversed() && state.getActivePlayer().getPlayerIndex() == state.getPlayers().size() - 1) {
 					state.reversePlayOrder();
-				}
-				if(state.getActivePlayer() == state.getPlayers().get(0) && state.playOrderReversed()) {
+					for(Player p : state.getPlayers()) {
+						p.giveFreeSettlement();
+					}
+				} else if(state.getActivePlayer() == state.getPlayers().get(0) && state.playOrderReversed()) {
 					state.reversePlayOrder();
 					state.advanceStage();
-					return;
+				} else {
+					state.activateNextPlayer();
 				}
+			} else {
+				state.activateNextPlayer();
 			}
-			state.activateNextPlayer();
 		}
 	}
 	
@@ -66,8 +72,10 @@ public class GameManager {
 
 	public synchronized void addSettlement(GameAction action) {
 		Node n = action.getLocation();
-		Settlement s = new Settlement(n, action.getPlayer());
-		this.state.getBoard().addSettlement(s);
-		action.getPlayer().playSettlement(s);
+		if(!n.hasSettlement() && action.getPlayer().checkResources(GamePiece.SETTLEMENT)) {
+			Settlement s = new Settlement(n, action.getPlayer());
+			this.state.getBoard().addSettlement(s);
+			action.getPlayer().playSettlement(s);
+		}
 	}
 }

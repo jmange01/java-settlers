@@ -8,18 +8,22 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import com.settlers.gamelogic.gamemanager.SettlersGameProperties.GamePiece;
 import com.settlers.gamelogic.gamestate.board.Road;
 import com.settlers.gamelogic.gamestate.board.Settlement;
 import com.settlers.gui.Tile.TileType;
 
 public class Player {
 	
-	String name;
-	int freeSettlements;
-	int freeCities;
-	int freeRoads;
-	int points;
-	int knights;
+	private String name;
+	/*TODO: Move this to stockpile*/
+	private int freeSettlements;
+	private int freeCities;
+	private int freeRoads;
+	private int points;
+	private int knights;
+	/*******************************/
+	private int playerIndex;
 	private boolean isActive = false;
 	
 	List<Settlement> ownedSettlements;
@@ -27,7 +31,7 @@ public class Player {
 	Stockpile stockpile;
 	private BufferedImage settlementImage;
 
-	public Player(String name) {
+	public Player(String name, String color) {
 		this.name = name;
 		this.freeSettlements = 5;
 		this.freeCities = 4;
@@ -39,7 +43,8 @@ public class Player {
 		this.stockpile = new Stockpile();
 		
 		try {
-			this.settlementImage = ImageIO.read(new File("resources/settlement_red.png"));
+			String fileUrl = "resources/settlement_" + color.toLowerCase() + ".png";
+			this.settlementImage = ImageIO.read(new File(fileUrl));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -47,6 +52,14 @@ public class Player {
 	
 	public String getPlayerName() {
 		return this.name;
+	}
+	
+	public int getPlayerIndex() {
+		return this.playerIndex;
+	}
+	
+	public void setPlayerIndex(int index) {
+		this.playerIndex = index;
 	}
 	
 	public void setActive(boolean isActive) {
@@ -58,8 +71,16 @@ public class Player {
 	}
 	
 	public void playSettlement(Settlement s) {
-		this.freeSettlements--;
+		if(this.freeSettlements > 0) {
+			this.freeSettlements--;
+		} else {
+			this.stockpile.useSupplies(GamePiece.SETTLEMENT);
+		}
 		this.ownedSettlements.add(s);
+	}
+	
+	public void giveFreeSettlement() {
+		this.stockpile.giveFreeSettlement();
 	}
 	
 	public void updateStockpile(TileType resource) {
@@ -70,15 +91,12 @@ public class Player {
 		return this.settlementImage;
 	}
 	
+	public boolean checkResources(GamePiece piece) {
+		return this.stockpile.hasSufficientSupplies(piece);
+	}
+	
 	public String reportResources() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Brick: " + this.stockpile.brick + "\n");
-		sb.append("Ore: " + this.stockpile.ore + "\n");
-		sb.append("Sheep: " + this.stockpile.sheep + "\n");
-		sb.append("Wheat: " + this.stockpile.wheat + "\n");
-		sb.append("Wood: " + this.stockpile.wood);
-		
-		return sb.toString();
+		return this.stockpile.reportResources();
 	}
 	
 }
