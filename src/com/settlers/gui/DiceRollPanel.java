@@ -9,12 +9,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import com.settlers.gamelogic.gamestate.SettlersGameState;
-import com.settlers.gamelogic.gamestate.SettlersGameState.PlayStep;
 import com.settlers.gui.listener.GameAction;
 import com.settlers.gui.listener.GameAction.ActionType;
 
 public class DiceRollPanel extends GamePanel {
-
+	private static final long serialVersionUID = 845167590457917406L;
+	
 	private SettlersGameState state;
 	private JButton rollButton;
 	private JLabel result;

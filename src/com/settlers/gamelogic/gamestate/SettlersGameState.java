@@ -57,6 +57,7 @@ public class SettlersGameState {
 		for(int i = 0; i < players.size(); i++) {
 			players.get(i).setPlayerIndex(i);
 			players.get(i).giveFreeSettlement();
+			players.get(i).giveFreeRoad();
 		}
 		players.get(activePlayer).setActive(true);
 		BoardBuilder builder = new StandardBoardBuilder();

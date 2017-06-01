@@ -1,13 +1,8 @@
 package com.settlers.gamelogic.gamestate.board;
 
 import java.awt.Point;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import com.settlers.gui.Tile;
 
@@ -17,10 +12,12 @@ public class SettlersBoard {
 	private Node[][] nodes;
 	private Point[][] points;
 	private List<Settlement> settlements;
+	private List<Road> roads;
 	
 	public SettlersBoard(){
 		super();
 		settlements = new ArrayList<Settlement>();
+		roads = new ArrayList<Road>();
 	}
 	
 	public void setNodes(Node[][] nodes) {
@@ -53,5 +50,13 @@ public class SettlersBoard {
 	
 	public List<Settlement> getSettlements() {
 		return this.settlements;
+	}
+	
+	public List<Road> getRoads() {
+		return this.roads;
+	}
+	
+	public void addRoad(Road r) {
+		this.roads.add(r);
 	}
 }

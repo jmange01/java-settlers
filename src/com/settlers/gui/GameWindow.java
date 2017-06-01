@@ -33,7 +33,7 @@ public class GameWindow extends JFrame {
 	public GameAction getAction() {
 		GameAction action = this.container.getAction();
 		if(action != null) {
-			if(ActionType.END_STAGE.equals(action.getType())) {
+			if(ActionType.END_STAGE.equals(action.type)) {
 				state.finalizeInitialState();
 				this.notifyPhaseChange();
 			} else {

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.settlers.gamelogic.vo.Player;
 import com.settlers.gui.Tile;
 
 public class Node {
@@ -16,9 +17,10 @@ public class Node {
 	private Settlement settlement = null;
 	private Set<Node> adjacent = new HashSet<Node>();
 	private Map<Integer,List<Tile>> resources;
+	private List<Road> roads = new ArrayList<Road>();
 	
 	public Node(int y, int x) {
-		setIndexedLocation(new Point(x,y));
+		this.setIndexedLocation(new Point(x,y));
 		resources = new HashMap<Integer,List<Tile>>();
 	}
 	
@@ -34,10 +36,30 @@ public class Node {
 		}
 	}
 	
-//	public void addRoad
+	public void addRoad(Road r) {
+		this.roads.add(r);
+	}
+	
+	public int roadCount() {
+		return this.roads.size();
+	}
+	
+	public boolean hasRoadTo(Node n) {
+		for(Road r : this.roads) {
+			if(r.getEnd().equals(n) || r.getStart().equals(n)) return true;
+		}
+		return false;
+	}
 	
 	public boolean hasSettlement() {
 		return this.settlement != null;
+	}
+	
+	public boolean isOccupiedBy(Player p) {
+		if(this.settlement.getOwner().equals(p)) {
+			return true;
+		}
+		return false;
 	}
 	
 	public void setSettlement(Settlement settlement) {
@@ -70,5 +92,10 @@ public class Node {
 	
 	public Map<Integer, List<Tile>> getResourceMap() {
 		return this.resources;
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.indexedLocation.x * 10000 + this.indexedLocation.y;
 	}
 }

@@ -8,7 +8,7 @@ import java.util.List;
 import com.settlers.gamelogic.gamestate.board.SettlersBoard;
 import com.settlers.gamelogic.gamestate.board.Settlement;
 
-public class SettlementDrawer implements Drawer {
+public class SettlementDrawer implements Drawer<SettlersBoard> {
 	
 	List<Settlement> settlements = new ArrayList<Settlement>();
 

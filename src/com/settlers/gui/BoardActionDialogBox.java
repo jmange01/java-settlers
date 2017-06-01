@@ -35,12 +35,24 @@ public class BoardActionDialogBox extends GameActionPanel {
 	
 	private void addOptions(Node n) {
 		if(!n.hasSettlement()) {
-			JButton button = new JButton("BUILD SETTLEMENT");
-			button.setSize(100, 20);
-			button.setFont(button.getFont().deriveFont(7.0f));
-			button.setMargin(new Insets(0,0,0,0));
-			this.add(button);
-			button.addMouseListener(new GameActionListener(new GameAction(ActionType.BUILD_SETTLEMENT, this.actor),this));
+			JButton option = createOption("BUILD SETTLEMENT");
+			this.add(option);
+			option.addMouseListener(new GameActionListener(new GameAction(ActionType.BUILD_SETTLEMENT, this.actor),this));
 		}
+		if(n.roadCount() < 3) {
+			JButton option = createOption("BUILD ROAD");
+			this.add(option);
+			option.addMouseListener(new GameActionListener(new GameAction(ActionType.START_ROAD, this.actor),this));
+		}
+		
+	}
+	
+	private JButton createOption(String text) {
+		JButton option = new JButton(text);
+		option.setSize(100, 20);
+		option.setFont(option.getFont().deriveFont(7.0f));
+		option.setMargin(new Insets(0, 0, 0, 0));
+		
+		return option;
 	}
 }

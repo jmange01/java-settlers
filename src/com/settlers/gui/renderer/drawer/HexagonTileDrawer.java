@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.settlers.gamelogic.gamestate.board.Hexagon;
-import com.settlers.gamelogic.gamestate.board.Node;
 import com.settlers.gamelogic.gamestate.board.SettlersBoard;
 import com.settlers.gui.Tile;
 import com.settlers.gui.Tile.TileType;
 
-public class HexagonTileDrawer implements Drawer {
+public class HexagonTileDrawer implements Drawer<SettlersBoard> {
 	
 	private int tileHeight = 80;
 	private int tileWidth = 80;

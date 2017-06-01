@@ -1,5 +1,12 @@
 package com.settlers.gamelogic.gamemanager;
 
+/**
+ * Encapsulates the relevant static game properties, such as the cost of
+ * game pieces.
+ * 
+ * @author jmang
+ *
+ */
 public class SettlersGameProperties {
 	public enum GamePiece {
 		SETTLEMENT(1,1,1,1,0),

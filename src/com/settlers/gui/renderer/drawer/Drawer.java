@@ -2,11 +2,16 @@ package com.settlers.gui.renderer.drawer;
 
 import java.awt.Graphics;
 
-import com.settlers.gamelogic.gamestate.SettlersGameState;
-import com.settlers.gamelogic.gamestate.board.SettlersBoard;
-
-public interface Drawer {
+public interface Drawer<T> {
+	/**
+	 * Handles the drawing logic for rendering various aspects of the GUI to the window.
+	 * @param g a standard Java Graphics class
+	 */
 	public void draw(Graphics g);
 	
-	void update(SettlersBoard board);
+	/**
+	 * Updates the drawer with the current state of the board.
+	 * @param board the current game board.
+	 */
+	void update(T t);
 }

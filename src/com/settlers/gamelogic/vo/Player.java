@@ -1,8 +1,10 @@
 package com.settlers.gamelogic.vo;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +18,6 @@ import com.settlers.gui.Tile.TileType;
 public class Player {
 	
 	private String name;
-	/*TODO: Move this to stockpile*/
-	private int freeSettlements;
-	private int freeCities;
-	private int freeRoads;
-	private int points;
-	private int knights;
-	/*******************************/
 	private int playerIndex;
 	private boolean isActive = false;
 	
@@ -31,21 +26,27 @@ public class Player {
 	Stockpile stockpile;
 	private BufferedImage settlementImage;
 
+	//Temp variable for setting color of roads
+	public Color playerColor;
+
 	public Player(String name, String color) {
 		this.name = name;
-		this.freeSettlements = 5;
-		this.freeCities = 4;
-		this.freeRoads = 15;
-		this.points = 0;
-		this.knights = 0;
 		this.ownedSettlements = new ArrayList<Settlement>();
 		this.ownedRoads = new ArrayList<Road>();
 		this.stockpile = new Stockpile();
+		//Retrieves the correct color via reflection. Sets the color to black if the correct value can't be parsed.
+		try {
+			Field f = Color.class.getField(color.toUpperCase());
+			playerColor = (Color)f.get(null);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e1) {
+			playerColor = Color.BLACK;
+		}
 		
 		try {
 			String fileUrl = "resources/settlement_" + color.toLowerCase() + ".png";
 			this.settlementImage = ImageIO.read(new File(fileUrl));
 		} catch (IOException e) {
+			//TODO: Attempt to load a default icon, then throw an exception as a last resort, if this fails, something is definitely broken.
 			e.printStackTrace();
 		}
 	}
@@ -71,16 +72,16 @@ public class Player {
 	}
 	
 	public void playSettlement(Settlement s) {
-		if(this.freeSettlements > 0) {
-			this.freeSettlements--;
-		} else {
-			this.stockpile.useSupplies(GamePiece.SETTLEMENT);
-		}
+		this.stockpile.useSupplies(GamePiece.SETTLEMENT);
 		this.ownedSettlements.add(s);
 	}
 	
 	public void giveFreeSettlement() {
 		this.stockpile.giveFreeSettlement();
+	}
+	
+	public void giveFreeRoad() {
+		this.stockpile.giveFreeRoad();
 	}
 	
 	public void updateStockpile(TileType resource) {

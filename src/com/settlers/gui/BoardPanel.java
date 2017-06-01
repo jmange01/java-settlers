@@ -14,6 +14,7 @@ import com.settlers.gamelogic.gamestate.board.Node;
 import com.settlers.gamelogic.gamestate.board.SettlersBoard;
 import com.settlers.gui.listener.BoardPanelMouseListener;
 import com.settlers.gui.listener.GameAction;
+import com.settlers.gui.listener.GameAction.ActionType;
 import com.settlers.gui.renderer.AbstractRenderer;
 import com.settlers.util.Calculator2d;
 
@@ -41,19 +42,27 @@ public class BoardPanel extends GamePanel {
 	
 	public void notifyPanelAction(MouseEvent e) {
 		if(MouseEvent.MOUSE_CLICKED == e.getID()) {
-			Node n = getNearestNode(e.getPoint());
+			Node n = this.getNearestNode(e.getPoint());
 			//TODO: replace hard-coded value with property
 			if(Calculator2d.getDistance(e.getPoint(), n.getLocation()) < 10.0) {
-				this.addLightBox(n);				
-			} else {
+				if(this.gameAction == null) {
+					this.addLightBox(n);
+				}
+				//TODO: This logic has to do with roads. There's definitely a better way to do this.
+				else if(ActionType.START_ROAD.equals(this.gameAction.type)) {
+					this.gameAction.secondaryLocation = n;
+					this.gameAction.type = ActionType.BUILD_ROAD;
+				}
+			} else if(this.lightBox != null){
 				this.removeLightBox();
 			}
 		}
 	}
+	
 	@Override
 	public void notifyGameAction(GameAction g) {
 		this.gameAction = g;
-		g.setLocation(activeNode);
+		g.location = activeNode;
 		this.removeLightBox();
 	}
 	
@@ -90,6 +99,7 @@ public class BoardPanel extends GamePanel {
 	protected void addLightBox(Node n) {
 		if(this.lightBox != null) {
 			this.remove(this.lightBox);
+			this.lightBox = null;
 		}
 		JPanel lightBox = new BoardActionDialogBox(n, state.getActivePlayer(), this);
 		this.add(lightBox);
@@ -107,7 +117,10 @@ public class BoardPanel extends GamePanel {
 	@Override
 	public GameAction getAction() {
 		GameAction action = this.gameAction;
-		this.gameAction = null;
-		return action;
+		if(this.gameAction != null && !ActionType.START_ROAD.equals(this.gameAction.type)) {
+			this.gameAction = null;
+		}
+		return action;	
 	}
+	
 }

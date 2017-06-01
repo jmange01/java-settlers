@@ -16,7 +16,7 @@ import com.settlers.gui.listener.GameAction;
  * @author Jeff
  *
  */
-public class SOJGame implements Runnable{
+public class SOJGame implements Runnable {
 	
 	GameWindow gui;
 	GameManager manager;

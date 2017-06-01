@@ -10,6 +10,8 @@ import com.settlers.gui.listener.GameAction;
 import com.settlers.gui.listener.GameAction.ActionType;
 
 public class EndTurnPanel extends GamePanel {
+	private static final long serialVersionUID = 5248497304313488454L;
+	
 	private GameAction action;
 	
 	public EndTurnPanel() {

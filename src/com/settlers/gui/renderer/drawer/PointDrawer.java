@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.settlers.gamelogic.gamestate.board.SettlersBoard;
 
-public class PointDrawer implements Drawer {
+public class PointDrawer implements Drawer<SettlersBoard> {
 
 	private List<Point> pts;
 	
